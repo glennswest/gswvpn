@@ -25,6 +25,9 @@
 YOUR_IPSEC_PSK=''
 YOUR_USERNAME=''
 YOUR_PASSWORD=''
+export YOUR_IPSEC_PSK=`cat ~/.vpn_ipsec_psk`
+export YOUR_USERNAME=`cat ~/.vpn_user_name`
+export YOUR_PASSWORD=`cat ~/.vpn_password`
 
 # Important notes:   https://git.io/vpnnotes
 # Setup VPN clients: https://git.io/vpnclients
@@ -211,8 +214,8 @@ conn xauth-psk
   auto=add
   leftsubnet=0.0.0.0/0
   rightaddresspool=192.168.43.10-192.168.43.250
-  modecfgdns1=8.8.8.8
-  modecfgdns2=8.8.4.4
+  modecfgdns1=10.200.0.1
+  modecfgdns2=10.200.0.2
   leftxauthserver=yes
   rightxauthclient=yes
   leftmodecfgserver=yes
@@ -253,8 +256,8 @@ EOF
 cat > /etc/ppp/options.xl2tpd <<'EOF'
 ipcp-accept-local
 ipcp-accept-remote
-ms-dns 8.8.8.8
-ms-dns 8.8.4.4
+ms-dns 10.200.0.1
+ms-dns 10.200.0.2
 noccp
 auth
 crtscts
