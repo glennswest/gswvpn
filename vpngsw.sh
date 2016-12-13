@@ -383,6 +383,8 @@ EOF
     iptables -I FORWARD 4 -i ppp+ -o ppp+ -s 192.168.42.0/24 -d 192.168.42.0/24 -j ACCEPT
     iptables -I FORWARD 5 -i em+ -d 192.168.43.0/24 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
     iptables -I FORWARD 6 -s 192.168.43.0/24 -o em+ -j ACCEPT
+    iptables -I FORWARD 7 -i em1 -s 10.200.0.0/24  -j ACCEPT
+    iptables -I FORWARD 8 -o em1 -d 10.200.0.0/24  -j ACCEPT
     # Uncomment to DROP traffic between VPN clients themselves
     # iptables -I FORWARD 2 -i ppp+ -o ppp+ -s 192.168.42.0/24 -d 192.168.42.0/24 -j DROP
     # iptables -I FORWARD 3 -s 192.168.43.0/24 -d 192.168.43.0/24 -j DROP
