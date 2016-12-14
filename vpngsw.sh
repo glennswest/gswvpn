@@ -389,6 +389,7 @@ EOF
     # iptables -I FORWARD 2 -i ppp+ -o ppp+ -s 192.168.42.0/24 -d 192.168.42.0/24 -j DROP
     # iptables -I FORWARD 3 -s 192.168.43.0/24 -d 192.168.43.0/24 -j DROP
     iptables -A FORWARD -j DROP
+    iptables -t nat -I POSTROUTING -s 10.200.0.0/24 -o em1.90 -j MASQUERADE
     iptables -t nat -I POSTROUTING -s 192.168.43.0/24 -o em+ -m policy --dir out --pol none -j SNAT --to-source "$PRIVATE_IP"
     iptables -t nat -I POSTROUTING -s 192.168.42.0/24 -o em+ -j SNAT --to-source "$PRIVATE_IP"
     echo "# Modified by hwdsl2 VPN script" > /etc/sysconfig/iptables
