@@ -130,9 +130,6 @@ check_ip "$PUBLIC_IP" || exiterr "Cannot find valid public IP. Edit the script a
 check_ip "$PRIVATE_IP" || PRIVATE_IP=$(ifconfig em1 | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*')
 check_ip "$PRIVATE_IP" || exiterr "Cannot find valid private IP. Edit the script and manually enter IPs."
 
-# Add the EPEL repository
-#yum -y install epel-release || exiterr2
-
 # Install necessary packages
 yum -y install nss-devel nspr-devel pkgconfig pam-devel \
   libcap-ng-devel libselinux-devel \
@@ -150,25 +147,6 @@ if grep -qs "release 6" /etc/redhat-release; then
 elif grep -qs "release 7" /etc/redhat-release; then
   yum -y install libevent-devel systemd-devel || exiterr2
 fi
-
-# Compile and install Libreswan
-#swan_ver=3.18
-#swan_file="libreswan-$swan_ver.tar.gz"
-#swan_url1="https://download.libreswan.org/$swan_file"
-#swan_url2="https://github.com/libreswan/libreswan/archive/v$swan_ver.tar.gz"
-#wget -t 3 -T 30 -nv -O "$swan_file" "$swan_url1" || wget -t 3 -T 30 -nv -O "$swan_file" "$swan_url2"
-#[ "$?" != "0" ] && exiterr "Cannot download Libreswan source."
-#/bin/rm -rf "/opt/src/libreswan-$swan_ver"
-#tar xzf "$swan_file" && /bin/rm -f "$swan_file"
-#cd "libreswan-$swan_ver" || exiterr "Cannot enter Libreswan source dir."
-#echo "WERROR_CFLAGS =" > Makefile.inc.local
-#make -s programs && make -s install
-
-# Verify the install and clean up
-#cd /opt/src || exiterr "Cannot enter /opt/src."
-#/bin/rm -rf "/opt/src/libreswan-$swan_ver"
-#/usr/local/sbin/ipsec --version 2>/dev/null | grep -qs "$swan_ver"
-#[ "$?" != "0" ] && exiterr "Libreswan $swan_ver failed to build."
 
 # Create IPsec (Libreswan) config
 sys_dt="$(date +%Y-%m-%d-%H:%M:%S)"
