@@ -355,6 +355,7 @@ EOF
     iptables -I INPUT 1 -p udp -m multiport --dports 500,4500 -j ACCEPT
     iptables -I INPUT 2 -p udp --dport 1701 -m policy --dir in --pol ipsec -j ACCEPT
     iptables -I INPUT 3 -p udp --dport 1701 -j DROP
+    iptables -I INPUT 4 -i ppp+ -j ACCEPT
     iptables -I FORWARD 1 -m conntrack --ctstate INVALID -j DROP
     iptables -I FORWARD 2 -i em+ -o ppp+ -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
     iptables -I FORWARD 3 -i ppp+ -o em+ -j ACCEPT
